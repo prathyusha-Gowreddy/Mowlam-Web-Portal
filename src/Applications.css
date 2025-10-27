@@ -1,0 +1,92 @@
+.applications-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.drawer-open .applications-main-content {
+  margin-left: 310px;
+}
+
+.applications-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-left: 0;
+  background: white;
+  transition: margin-left 0.3s ease;
+}
+
+.applications-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  padding: 2rem 2rem;
+  height: calc(100vh - 100px);
+  box-sizing: border-box;
+}
+
+/* Card Styling */
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.card span {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-top-right-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+  margin-bottom: 0;
+  z-index: 2;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+/* Image Backgrounds */
+.card[data-bg="epicare"] {
+  background-image: url('./assets/Epicare.png');
+}
+
+.card[data-bg="origin"] {
+  background-image: url('./assets/Origin.png');
+}
+
+.card[data-bg="viclarity"] {
+  background-image: url('./assets/Viclarity.png');
+}
+
+.card[data-bg="eclaims"] {
+  background-image: url('/public/mowlam_app_1.png'); /* or whatever is correct */
+}
+
+.access-denied {
+  height: calc(100vh - 100px); /* leave space for navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff0000;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}

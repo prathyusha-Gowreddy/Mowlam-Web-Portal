@@ -1,0 +1,120 @@
+/* Full-height wrapper */
+.reporting-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Main content area */
+.reporting-main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  transition: margin-left 0.3s ease;
+  padding-left: 0;
+  overflow: hidden; /* prevent child overflow */
+}
+
+/* When drawer is open (optional for sidebar layout) */
+.drawer-open .reporting-main-content {
+  margin-left: 310px;
+}
+
+/* Card grid container */
+.reporting-cards2 {
+  background: white;
+  padding: 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 1.2rem;
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  max-height: calc(100vh - 100px); /* adjust if you have a header */
+}
+
+/* Individual card style */
+.card2 {
+  width: 100%;
+  padding-top: 100%;  /* height equals width for perfect square */
+  position: relative; /* for absolute children */
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  font-weight: bold;
+  color: #fff;
+  transition: transform 0.3s ease;
+
+  /* Flex children for the text */
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+/* Card overlay for readability */
+.card2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Card title text */
+.card2 > span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.6rem 1.2rem;
+  border-top-right-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Hover animation */
+.card2:hover {
+  transform: scale(1.02);
+}
+
+/* Background images by data attribute */
+.card2[data-bg="reports2"] {
+  background-image: url('./assets/image1.jpg');
+}
+.card2[data-bg="websites2"] {
+  background-image: url('./assets/interventions.jpeg');
+}
+.card2[data-bg="password2"] {
+  background-image: url('./assets/patient_outcomes.jpg');
+}
+.card2[data-bg="faq2"] {
+  background-image: url('./assets/patient_experience.png');
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .reporting-cards2 {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  }
+}
+
+@media (max-width: 600px) {
+  .reporting-cards2 {
+    grid-template-columns: 1fr; /* 1 card per row */
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+  }
+  .card2 > span {
+    font-size: 0.9rem;
+  }
+}

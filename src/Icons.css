@@ -1,0 +1,87 @@
+/* Wrapper and Main Layout */
+.icons-wrapper {
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  .icons-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  
+  /* Grid container for cards */
+  .small-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 16px;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  /* Card styling */
+  .small-icon-card {
+    background-color: #2d2d2d;
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+    color: white;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  /* Icon size */
+  .small-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  
+  /* Label text */
+  .small-icon-label {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  /* Hover effect */
+  .small-icon-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Responsive behavior */
+  @media (max-width: 600px) {
+    .small-card-container {
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    }
+  
+    .small-icon {
+      font-size: 20px;
+    }
+  
+    .small-icon-label {
+      font-size: 11px;
+    }
+  }
+  
+  /* Optional background classes (if needed) */
+  .reports2 {
+    background-color: #6c63ff;
+  }
+  
+  .websites2 {
+    background-color: #00bcd4;
+  }
+  
+  .password2 {
+    background-color: #ff9800;
+  }
+  
+  .faq2 {
+    background-color: #4caf50;
+  }
+  

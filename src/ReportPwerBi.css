@@ -1,0 +1,56 @@
+.reporting-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background: #f6f8fb;
+  }
+  
+  .reporting-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.25s ease;
+  }
+  
+  /* Match this to your Sidebar's width (e.g., 260–300px) */
+  .reporting-wrapper.drawer-open .reporting-main-content {
+    margin-left: 280px;
+  }
+  
+  .content-area {
+    padding: 16px;
+  }
+  
+  .content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .content-title {
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .btn.btn-refresh {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .btn.btn-refresh:hover {
+    background: #2d86c3;
+  }
+  
+  .report-frame {
+    width: 80%;
+    height: 80vh;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
