@@ -1,12 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
+import ChatBot from "./Chatbot";
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [status, setStatus] = useState("neutral"); // "neutral", "success", "error"
+  const [status, setStatus] = useState("neutral");
   const [errorMessage, setErrorMessage] = useState("");
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+
+  const navigate = useNavigate();
+  const { instance } = useMsal();
+  const isAuthenticated = useIsAuthenticated();
+
+  useEffect(() => {
+    const localUser = sessionStorage.getItem("localUserLoggedIn") === "true";
+
+    if (isAuthenticated || localUser) {
+      navigate("/homepage", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  // Global mouse tracking for eye movement
+  useEffect(() => {
+    const handleGlobalMouseMove = (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleGlobalMouseMove);
+    return () => window.removeEventListener("mousemove", handleGlobalMouseMove);
+  }, []);
 
   const validUsers = [
     { username: "Ashok_MLHC", password: "MLHC@2025" },
@@ -24,24 +51,18 @@ function Login() {
       sessionStorage.setItem("localUserLoggedIn", "true");
       sessionStorage.setItem("loggedInUsername", matchedUser.username);
       setTimeout(() => {
-        window.location.href = "/homepage";
+        sessionStorage.setItem("localUserLoggedIn", "true");
+        navigate("/homepage", { replace: true });
       }, 1500);
     } else {
       setStatus("error");
-      setErrorMessage("❌ Invalid credentials. Please try again!");
+      setErrorMessage("❌ Invalid credentials. Please check your username and password.");
       setTimeout(() => setStatus("neutral"), 2000);
     }
   };
 
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    setMousePos({ x, y });
-  };
-
-  const handleMouseLeave = () => {
-    setMousePos({ x: 0.5, y: 0.5 }); // reset to center
+  const handleMSLogin = () => {
+    instance.loginRedirect();
   };
 
   const isFormValid = username.trim() !== "" && password.trim() !== "";
@@ -54,12 +75,8 @@ function Login() {
 
   return (
     <div className="login-page-layout">
-      {/* Left side with moving shapes */}
-      <div
-        className={`login-left-section ${status}`}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
+      {/* Left side with animated emojis */}
+      <div className={`login-left-section ${status}`}>
         <div
           className="shapes-container"
           style={{
@@ -143,25 +160,36 @@ function Login() {
 
       {/* Right side form */}
       <div className="login-right-section">
-        <div className="login-box">
-          <h2 className="login-title">Welcome back!</h2>
+        <img src="/logo.png" alt="Mowlam Logo" className="mowlam-logo" />
+        <div className="login-box login-box-centered">
+          <h2 className="login-title">Welcome to Mowlam Healthcare</h2>
 
-          {errorMessage && <div className="login-error-message">{errorMessage}</div>}
+          <button className="ms-login" onClick={handleMSLogin}>
+            <i className="fab fa-windows"></i> Login with Office 365
+          </button>
 
-          <label htmlFor="username">Email</label>
+          <p className="sub-text">
+            Don't have an Office 365 login? <br /> Login with your username.
+          </p>
+
+          {errorMessage && (
+            <div className="login-error-message">{errorMessage}</div>
+          )}
+
+          <label htmlFor="username">Username *</label>
           <input
             id="username"
             type="text"
-            placeholder="Enter your email"
+            placeholder="Enter Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
 
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Password *</label>
           <input
             id="password"
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -171,13 +199,10 @@ function Login() {
             onClick={handleSignIn}
             disabled={!isFormValid}
           >
-            Log In
-          </button>
-
-          <button className="google-login">
-            <i className="fab fa-google"></i> Log in with Google
+            Sign In
           </button>
         </div>
+        <ChatBot />
       </div>
     </div>
   );
