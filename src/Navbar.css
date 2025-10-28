@@ -21,7 +21,7 @@
 }
 
 .menu-toggle {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   cursor: pointer;
   color: #374649;
 }
@@ -33,7 +33,7 @@
 }
 
 .nav-link {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: #374649;
   cursor: pointer;
@@ -51,7 +51,7 @@
 }
 
 .topbar-icon {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #374649;
   cursor: pointer;
 }
@@ -113,7 +113,7 @@
 
 .username-label {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   margin-left: 6px;
   color: #333;
 }
