@@ -49,25 +49,38 @@ function Navbar({ isDrawerOpen, setIsDrawerOpen }) {
         <FaBars
           className="menu-toggle"
           onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+          title="Toggle Sidebar Menu"
         />
         <img src="/logo.png" alt="Logo" className="topbar-logo" />
         <nav className="top-nav-links">
-          <span className="nav-link" onClick={() => navigate("/homepage")}>Home</span>
-          <span className="nav-link">Executive Team</span>
-          <span className="nav-link">Support Office</span>
-          <span className="nav-link">Resident Family</span>
-          <span className="nav-link">HIQA</span>
-          <span className="nav-link">HSE</span>
+          <span className="nav-link" onClick={() => navigate("/homepage")} title="Go to Dashboard">
+            Home
+          </span>
+          <span className="nav-link" title="Executive Team Information">
+            Executive Team
+          </span>
+          <span className="nav-link" title="Support Office Contacts">
+            Support Office
+          </span>
+          <span className="nav-link" title="Resident Family Portal">
+            Resident Family
+          </span>
+          <span className="nav-link" title="HIQA Standards & Reports">
+            HIQA
+          </span>
+          <span className="nav-link" title="HSE Resources">
+            HSE
+          </span>
         </nav>
       </div>
 
       <div className="topbar-right" ref={dropdownRef}>
-        <div className="notification-wrapper">
+        <div className="notification-wrapper" title="Notifications (4 unread)">
           <FaBell className="topbar-icon" />
           <span className="notification-count">4</span>
         </div>
 
-        <div className="user-dropdown" onClick={() => setShowDropdown(!showDropdown)}>
+        <div className="user-dropdown" onClick={() => setShowDropdown(!showDropdown)} title="User Profile & Settings">
           <FaUserCircle className="topbar-icon" />
           {displayName && (
             <span className="username-label">Hi, {displayName}</span>

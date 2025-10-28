@@ -13,7 +13,8 @@ export default function Reports() {
   // Prefer an env var for easy swapping across environments
   const reportUrl =
     import.meta.env.VITE_PBI_PTW_URL ||
-    "https://playground.powerbi.com/sampleReportEmbed" ;
+    "https://playground.powerbi.com/sampleReportEmbed?report=customerProfitability";
+    // "https://playground.powerbi.com/sampleReportEmbed" ;
     // "https://app.powerbi.com/groups/cff51c1d-12a0-45f6-b475-a52978b1e551/reports/99b6dddf-0958-4819-83e9-71a997dbbe77/9f230f0eb9b81116ca04?bookmarkGuid=9a122692-af05-4fba-b9ed-1ab9bfd94afa&bookmarkUsage=1&ctid=2b6c600f-b6cb-4329-af3b-1b32c62c440f&portalSessionId=8f9ee8db-31c7-43d7-a456-0bd9d13d7c64&fromEntryPoint=export";
     // "https://app.powerbi.com/groups/cff51c1d-12a0-45f6-b475-a52978b1e551/reports/a335a3a6-748c-4a1a-997f-e5dddf47f4bb/9f230f0eb9b81116ca04?experience=power-bi";
     // "https://playground.powerbi.com/sampleReportEmbed"; // Replace with your Publish-to-Web URL

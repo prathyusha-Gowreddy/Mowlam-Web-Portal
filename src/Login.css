@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-/* Left Side */
+/* Left Side - Animated Shapes */
 .login-left-section {
   flex: 1;
   background-color: #e7e8eb;
@@ -46,28 +46,29 @@
 }
 
 .shape1 {
-  width: 100px;
-  height: 60px;
+  width: 110px;
+  height: 65px;
   background-color: #ff8c42;
-  border-radius: 40px 40px 0 0;
+  border-radius: 50px 50px 0 0;
 }
 
 .shape2 {
-  width: 40px;
-  height: 80px;
+  width: 45px;
+  height: 85px;
   background-color: #333;
 }
 
 .shape3 {
-  width: 60px;
-  height: 100px;
-  background-color: #6a5acd;
+  width: 65px;
+  height: 105px;
+  background-color: #8b6fc9;
 }
 
 .shape4 {
-  width: 60px;
-  height: 70px;
+  width: 70px;
+  height: 75px;
   background-color: #ffd700;
+  border-radius: 50% 50% 50% 40%;
 }
 
 /* Eyes */
@@ -78,6 +79,23 @@
   display: flex;
   gap: 10px;
   transform: translateX(-50%);
+}
+
+.shape1 .eyes {
+  top: 25%;
+}
+
+.shape2 .eyes {
+  top: 15%;
+}
+
+.shape3 .eyes {
+  top: 12%;
+}
+
+.shape4 .eyes {
+  top: 18%;
+  left: 45%;
 }
 
 .eye {
@@ -106,11 +124,55 @@
   transition: transform 0.1s ease;
 }
 
+/* Mouths for shapes */
+.shape::before {
+  content: "";
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 12px;
+  border: 2px solid black;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+}
+
+.shape1::before {
+  width: 40px;
+  height: 15px;
+  border-radius: 0 0 30px 30px;
+}
+
+.shape2::before {
+  display: none;
+}
+
+.shape3::before {
+  width: 25px;
+  height: 10px;
+  border-radius: 0 0 20px 20px;
+}
+
+.shape4::before {
+  width: 12px;
+  height: 2px;
+  border: 2px solid black;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-radius: 0;
+  left: 75%;
+  bottom: 25%;
+  transform: none;
+}
+
 /* Animations on login */
 .login-left-section.success .shape1 {
   transform: translateY(-20px) rotate(-5deg);
   background-color: #32cd32;
 }
+
 .login-left-section.success .shape3 {
   transform: rotate(10deg);
   background-color: #28a745;
@@ -120,56 +182,101 @@
   transform: rotate(8deg);
   background-color: #ff4d4d;
 }
+
 .login-left-section.error .shape4 {
   transform: translateY(-10px);
   background-color: #e60000;
 }
 
-/* Right Section */
+/* Right Section - Login */
 .login-right-section {
   flex: 1;
-  background-color: #fff;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #f4f8f7;
+  z-index: 3;
 }
 
+/* Login Box */
 .login-box {
-  background: #ffffff;
-  padding: 2rem 2.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem 2rem;
   border-radius: 20px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  max-width: 320px;
   width: 100%;
+  max-height: 85vh;
   text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.login-box-centered {
+  position: relative;
 }
 
 .login-title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 600;
+  margin-bottom: 1.2rem;
   color: #374649;
-  margin-bottom: 2rem;
 }
 
-/* Inputs */
+/* MS Login Button */
+.ms-login {
+  background-color: #01B8AA;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  width: 100%;
+  max-width: 260px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ms-login:hover {
+  background-color: #019c92;
+}
+
+/* Subtext */
+.sub-text {
+  font-size: 0.75rem;
+  color: #555;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+/* Labels and Inputs */
 label {
   display: block;
-  text-align: left;
+  font-size: 0.8rem;
   color: #374649;
-  font-size: 0.85rem;
-  margin: 0.8rem auto 0.4rem auto;
+  font-weight: 500;
   max-width: 260px;
+  margin: 0.8rem auto 0.4rem auto;
+  text-align: left;
 }
 
 input {
   width: 100%;
   max-width: 260px;
-  padding: 0.6rem;
+  padding: 0.55rem 0.7rem;
   border-radius: 8px;
   border: 1px solid #ccc;
   background-color: #fff;
-  margin: 0 auto;
+  color: #000;
+  font-size: 0.85rem;
   display: block;
+  margin: 0 auto;
 }
 
 input:focus {
@@ -178,56 +285,443 @@ input:focus {
   transition: box-shadow 0.2s ease-in-out;
 }
 
-/* Buttons */
+input::placeholder {
+  color: #aaa;
+}
+
+/* Sign In Button */
 .sign-in {
-  margin-top: 1.5rem;
-  padding: 0.65rem;
-  border-radius: 8px;
+  background-color: #ccc;
   border: none;
+  padding: 0.65rem;
   width: 100%;
   max-width: 260px;
-  background-color: #ccc;
-  color: #fff;
+  border-radius: 8px;
   font-weight: bold;
+  font-size: 0.95rem;
   cursor: not-allowed;
+  color: #fff;
+  margin: 1rem auto 0 auto;
+  display: block;
   opacity: 0.7;
+  transition: 0.3s ease;
 }
 
 .sign-in.active {
   background-color: #01B8AA;
+  color: white;
   cursor: pointer;
   opacity: 1;
 }
 
-.sign-in.active:hover {
+.sign-in:hover:enabled {
   background-color: #019c92;
 }
 
-.google-login {
-  background-color: #fff;
-  color: #555;
-  border: 1px solid #ccc;
-  padding: 0.6rem;
-  width: 100%;
-  max-width: 260px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
+/* Mowlam Logo */
+.mowlam-logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 120px;
+  z-index: 4;
 }
 
-.google-login:hover {
-  background-color: #f0f0f0;
-}
-
-/* Error Message */
 .login-error-message {
   background-color: #ffe6e6;
   border: 1px solid #ff4d4d;
   color: #cc0000;
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-radius: 6px;
-  margin: 10px 0;
+  margin: 0.5rem 0;
+  font-size: 0.85rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Mobile Devices (320px - 768px) */
+@media screen and (max-width: 768px) {
+  .login-page-layout {
+    flex-direction: column;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .login-left-section {
+    flex: none;
+    height: auto;
+    min-height: 200px;
+    max-height: 40vh;
+    background-color: #e7e8eb;
+  }
+
+  .shapes-container {
+    gap: 8px;
+    transform: scale(0.8);
+  }
+
+  .shape1 {
+    width: 80px;
+    height: 50px;
+  }
+
+  .shape2 {
+    width: 35px;
+    height: 65px;
+  }
+
+  .shape3 {
+    width: 50px;
+    height: 80px;
+  }
+
+  .shape4 {
+    width: 55px;
+    height: 60px;
+  }
+
+  .eye {
+    width: 10px;
+    height: 10px;
+  }
+
+  .eye.small {
+    width: 8px;
+    height: 8px;
+  }
+
+  .eye::after {
+    width: 4px;
+    height: 4px;
+    top: 3px;
+    left: 3px;
+  }
+
+  .login-right-section {
+    flex: none;
+    min-height: 60vh;
+    padding: 1rem;
+    background-color: #f4f8f7;
+  }
+
+  .mowlam-logo {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .login-box {
+    max-width: 100%;
+    width: 100%;
+    max-height: 90vh;
+    height: auto;
+    padding: 1.5rem 1rem;
+    margin: 0;
+  }
+
+  .login-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .ms-login {
+    max-width: 100%;
+    padding: 0.7rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .sub-text {
+    font-size: 0.7rem;
+    margin-bottom: 0.8rem;
+  }
+
+  label {
+    font-size: 0.75rem;
+    margin: 0.6rem auto 0.3rem auto;
+  }
+
+  input {
+    max-width: 100%;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .sign-in {
+    max-width: 100%;
+    padding: 0.7rem;
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+  }
+
+  .login-error-message {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+    margin: 0.3rem 0;
+  }
+}
+
+/* Tablet Devices (768px - 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .login-page-layout {
+    flex-direction: row;
+  }
+
+  .login-left-section {
+    flex: 0.4;
+  }
+
+  .login-right-section {
+    flex: 0.6;
+    padding: 2rem;
+  }
+
+  .shapes-container {
+    gap: 12px;
+    transform: scale(0.9);
+  }
+
+  .shape1 {
+    width: 95px;
+    height: 58px;
+  }
+
+  .shape2 {
+    width: 40px;
+    height: 75px;
+  }
+
+  .shape3 {
+    width: 58px;
+    height: 95px;
+  }
+
+  .shape4 {
+    width: 62px;
+    height: 68px;
+  }
+
+  .mowlam-logo {
+    width: 100px;
+    top: 15px;
+    left: 15px;
+  }
+
+  .login-box {
+    max-width: 350px;
+    max-height: 85vh;
+    height: auto;
+    padding: 1.8rem 2rem;
+  }
+
+  .login-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ms-login {
+    max-width: 280px;
+    margin-bottom: 1.2rem;
+  }
+
+  .sub-text {
+    margin-bottom: 1.2rem;
+  }
+
+  label {
+    margin: 1rem auto 0.5rem auto;
+  }
+
+  .sign-in {
+    margin-top: 1.2rem;
+  }
+}
+
+/* Desktop and Large Screens (1024px+) */
+@media screen and (min-width: 1025px) {
+  .login-page-layout {
+    flex-direction: row;
+  }
+
+  .login-left-section {
+    flex: 1;
+  }
+
+  .login-right-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-box {
+    max-width: 320px;
+    max-height: 85vh;
+    height: auto;
+  }
+
+  .mowlam-logo {
+    width: 120px;
+    top: 20px;
+    left: 20px;
+  }
+}
+
+/* Extra Large Screens (1440px+) */
+@media screen and (min-width: 1440px) {
+  .login-box {
+    max-width: 380px;
+    max-height: 85vh;
+    height: auto;
+    padding: 2rem 2.5rem;
+  }
+
+  .login-title {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .ms-login {
+    max-width: 300px;
+    padding: 0.7rem;
   font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sub-text {
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    font-size: 0.85rem;
+    margin: 1.2rem auto 0.5rem auto;
+  }
+
+  input {
+    max-width: 300px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .sign-in {
+    max-width: 300px;
+    padding: 0.7rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .mowlam-logo {
+    width: 140px;
+    top: 25px;
+    left: 25px;
+  }
+}
+
+/* Cross-Browser Compatibility */
+@supports not (display: flex) {
+  .login-page-layout {
+    display: block;
+  }
+  
+  .login-left-section,
+  .login-right-section {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  .login-box {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  }
+  
+  .ms-login:hover,
+  .sign-in:hover:enabled {
+    -moz-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+  }
+}
+
+/* Safari specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .login-box {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  
+  input:focus {
+    -webkit-box-shadow: 0 0 0 2px #01B8AA;
+    box-shadow: 0 0 0 2px #01B8AA;
+  }
+}
+
+/* Edge specific fixes */
+@supports (-ms-ime-align: auto) {
+  .login-box {
+    background: rgba(255, 255, 255, 0.98);
+  }
+}
+
+/* High DPI displays */
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min-resolution: 192dpi) {
+  .mowlam-logo {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .login-page-layout {
+    flex-direction: row;
+  }
+  
+  .login-left-section {
+    height: 100vh;
+    flex: 0.3;
+  }
+  
+  .login-right-section {
+    height: 100vh;
+    flex: 0.7;
+    padding: 0.5rem;
+  }
+  
+  .login-box {
+    max-height: 95vh;
+    height: auto;
+    padding: 1rem;
+  }
+  
+  .shapes-container {
+    transform: scale(0.6);
+  }
+}
+
+/* Print styles */
+@media print {
+  .login-page-layout {
+    display: block;
+    background: white;
+  }
+  
+  .login-left-section {
+    display: none;
+  }
+  
+  .login-right-section {
+    width: 100%;
+    background: white;
+  }
+  
+  .login-box {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
 }
