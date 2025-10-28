@@ -11,9 +11,9 @@
     transition: margin-left 0.25s ease;
   }
   
-  /* Match this to your Sidebar's width (e.g., 260–300px) */
+  /* Match this to your Sidebar's width */
   .reporting-wrapper.drawer-open .reporting-main-content {
-    margin-left: 280px;
+    margin-left: 260px;
   }
   
   .content-area {

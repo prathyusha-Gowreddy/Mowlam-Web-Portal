@@ -40,6 +40,49 @@ function Login() {
     { username: "Ravi_MLHC", password: "MLHC@2025" },
   ];
 
+  // Real-time validation
+  useEffect(() => {
+    if (username.length > 0) {
+      const validUsername = validUsers.some(
+        (user) => user.username.toLowerCase().startsWith(username.toLowerCase())
+      );
+      
+      if (!validUsername) {
+        setStatus("error");
+        setErrorMessage("Invalid username. Please check your credentials.");
+        setTimeout(() => setStatus("neutral"), 1000);
+      } else {
+        setErrorMessage("");
+        setStatus("neutral");
+      }
+    } else {
+      setErrorMessage("");
+      setStatus("neutral");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username]);
+
+  useEffect(() => {
+    if (password.length > 0 && username.length > 0) {
+      const validUser = validUsers.find(
+        (user) => user.username.toLowerCase().startsWith(username.toLowerCase())
+      );
+      
+      if (validUser) {
+        const isValidPassword = validUser.password.startsWith(password);
+        if (!isValidPassword) {
+          setStatus("error");
+          setErrorMessage("Invalid password. Please check your credentials.");
+          setTimeout(() => setStatus("neutral"), 1000);
+        } else {
+          setErrorMessage("");
+          setStatus("neutral");
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [password, username]);
+
   const handleSignIn = () => {
     const matchedUser = validUsers.find(
       (user) => user.username === username && user.password === password
@@ -56,7 +99,7 @@ function Login() {
       }, 1500);
     } else {
       setStatus("error");
-      setErrorMessage("❌ Invalid credentials. Please check your username and password.");
+      setErrorMessage("Invalid credentials. Please check your username and password.");
       setTimeout(() => setStatus("neutral"), 2000);
     }
   };

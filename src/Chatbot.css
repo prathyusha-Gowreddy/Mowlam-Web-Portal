@@ -149,7 +149,7 @@
 
 .chatbot-close {
   background: none;
-  border: none;
+  border: 2px solid #01B8AA;
   color: #01B8AA;
   font-size: 1.5rem;
   cursor: pointer;
@@ -157,8 +157,8 @@
   border-radius: 4px;
   transition: all 0.2s ease;
   font-weight: bold;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,6 +167,7 @@
 .chatbot-close:hover {
   background-color: #01B8AA;
   color: white;
+  border: 2px solid #01B8AA;
 }
 
 .chatbot-popup{

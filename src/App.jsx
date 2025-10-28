@@ -9,6 +9,10 @@ import { useIsAuthenticated } from "@azure/msal-react";
 import IconGrid from './Icons';
 import PowerBIReport from './PowerBiReport';
 import Reports from './ReportPwerBi';
+import ReportSample1 from './ReportSample1';
+import ReportSample2 from './ReportSample2';
+import ReportSample3 from './ReportSample3';
+import ReportSample4 from './ReportSample4';
 
 // ✅ Supports both MSAL and Local Login
 function ProtectedRoute({ children }) {
@@ -39,6 +43,10 @@ function App() {
       <Route path="/icons" element={<ProtectedRoute><IconGrid/></ProtectedRoute>}></Route>
       <Route path="/powerBIReport" element={<ProtectedRoute><PowerBIReport/></ProtectedRoute>}></Route>
       <Route path="/reports" element={<ProtectedRoute><Reports/></ProtectedRoute>}></Route>
+      <Route path="/report-sample1" element={<ProtectedRoute><ReportSample1/></ProtectedRoute>}></Route>
+      <Route path="/report-sample2" element={<ProtectedRoute><ReportSample2/></ProtectedRoute>}></Route>
+      <Route path="/report-sample3" element={<ProtectedRoute><ReportSample3/></ProtectedRoute>}></Route>
+      <Route path="/report-sample4" element={<ProtectedRoute><ReportSample4/></ProtectedRoute>}></Route>
 
       {/* Catch-all fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
