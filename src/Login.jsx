@@ -36,8 +36,10 @@ function Login() {
   }, []);
 
   const validUsers = [
-    { username: "Ashok_MLHC", password: "MLHC@2025" },
-    { username: "Ravi_MLHC", password: "MLHC@2025" },
+    { username: "Prathyusha_MLHC", password: "MLHC@2025" },
+    { username: "Achyuth_MLHC", password: "MLHC@2025" },
+    { username: "Bhargav_MLHC", password: "MLHC@2025" },
+    { username: "Vijendra_MLHC", password: "MLHC@2025" },
   ];
 
   // Real-time validation
