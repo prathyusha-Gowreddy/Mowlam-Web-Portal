@@ -98,20 +98,27 @@ body {
 .favorite-card {
   background-color: #fff;
   border-radius: 14px;
+  border-left: 4px solid #01B8AA;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
   padding: 1rem 1.2rem;
   display: flex;
   align-items: center;
   gap: 0.8rem;
   font-size: 0.95rem;
-  color: #374649;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #01B8AA;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
+}
+
+.favorite-card svg {
+  color: #01B8AA;
+  fill: #01B8AA;
 }
 
 .favorite-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-left-color: #01B8AA;
+  box-shadow: 0 10px 20px rgba(1, 184, 170, 0.2);
 }
 
 /* Responsive cards */
