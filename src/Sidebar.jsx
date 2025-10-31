@@ -96,15 +96,15 @@ function Sidebar({ sidebarRef, onClose }) {
             </div>
             <div className="submenu-item" onClick={() => navigate("/report-sample2")} title="Sample Report Embed">
               <FaChartBar />
-              <span>Sample Report Embed</span>
+              <span>Solvay Tutoring Performance Dashboard</span>
             </div>
             <div className="submenu-item" onClick={() => navigate("/report-sample3")} title="HR Analytics Report">
               <FaChartBar />
-              <span>Hr Analytics</span>
+              <span>OutdoorFusion Sales Overview</span>
             </div>
             <div className="submenu-item" onClick={() => navigate("/report-sample4")} title="Sales Marketing Report">
               <FaChartBar />
-              <span>Sales Marketing</span>
+              <span>Customer Order Tracking and RDD Monitoring Report</span>
             </div>
             <div className="submenu-item" title="Operative and Procedure Reports">
               <FaProcedures />
