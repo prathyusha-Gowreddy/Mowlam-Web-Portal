@@ -9,7 +9,7 @@ export default function ReportSample2() {
   const sidebarRef = useRef(null);
 
   // Power BI report URLs
-  const reportUrl = "https://playground.powerbi.com/sampleReportEmbed";
+  const reportUrl = "https://app.powerbi.com/view?r=eyJrIjoiZDEzOTA0MjItNzA5OC00MmZhLTg4YWEtYzMwODNjYjI5NGQyIiwidCI6IjVmNDkzNDk3LWE0YzgtNDA4MC05NWVmLTBjMGZlY2RkMjg5MCIsImMiOjl9";
 
   // Refresh the iframe only, not the whole app
   const iframeSrc = useMemo(() => {
@@ -34,7 +34,7 @@ export default function ReportSample2() {
 
         <div className="content-area">
           <div className="content-header">
-            <h2 className="content-title">Sample Report Embed</h2>
+            <h2 className="content-title">Solvay Tutoring Performance Dashboard</h2>
 
             <button
               onClick={refreshReport}

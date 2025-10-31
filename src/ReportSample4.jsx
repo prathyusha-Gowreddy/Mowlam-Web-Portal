@@ -9,7 +9,7 @@ export default function ReportSample4() {
   const sidebarRef = useRef(null);
 
   // Power BI report URLs
-  const reportUrl = "https://playground.powerbi.com/sampleReportEmbed?report=salesMarketing";
+  const reportUrl = "https://app.powerbi.com/reportEmbed?reportId=36621bde-4614-40df-8e08-79481d767bcb&groupId=dfbfe8ab-b93b-4345-8a43-655697ff36dd&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLU5PUlRILUNFTlRSQUwtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQifQ%3d%3d";
 
   // Refresh the iframe only, not the whole app
   const iframeSrc = useMemo(() => {
