@@ -9,15 +9,18 @@ export default function ReportSample4() {
   const sidebarRef = useRef(null);
 
   // Power BI report URLs
-  const reportUrl = "https://app.powerbi.com/reportEmbed?reportId=36621bde-4614-40df-8e08-79481d767bcb&groupId=dfbfe8ab-b93b-4345-8a43-655697ff36dd&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVVTLU5PUlRILUNFTlRSQUwtcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQifQ%3d%3d";
-
+  const reportUrl = "https://app.powerbi.com/view?r=eyJrIjoiNjUwY2E1NTQtNTY2NS00ZTg4LWEyNWEtNWU4YThhMThkMzg4IiwidCI6IjVmNDkzNDk3LWE0YzgtNDA4MC05NWVmLTBjMGZlY2RkMjg5MCIsImMiOjl9&pageName=919d9cc5dec4e95223a8";
+  
   // Refresh the iframe only, not the whole app
   const iframeSrc = useMemo(() => {
+    if (!reportUrl || reportUrl.trim() === "") return null;
     const sep = reportUrl.includes("?") ? "&" : "?";
     return `${reportUrl}${sep}v=${cacheBust}`;
   }, [reportUrl, cacheBust]);
 
   const refreshReport = () => setCacheBust(Date.now());
+  
+  const hasReport = reportUrl && reportUrl.trim() !== "";
 
   return (
     <div className={`reporting-wrapper ${isDrawerOpen ? "drawer-open" : ""}`}>
@@ -33,26 +36,40 @@ export default function ReportSample4() {
         />
 
         <div className="content-area">
-          <div className="content-header">
-            <h2 className="content-title">Sales Marketing</h2>
+          <div className="content-area-inner">
+            <div className="content-header">
+              <h2 className="content-title">Customer Order Tracking and RDD Monitoring Report</h2>
 
-            <button
-              onClick={refreshReport}
-              className="btn btn-refresh"
-              aria-label="Refresh Report"
-            >
-              Refresh Report
-            </button>
-          </div>
+              {hasReport && (
+                <button
+                  onClick={refreshReport}
+                  className="btn btn-refresh"
+                  aria-label="Refresh Report"
+                >
+                  Refresh Report
+                </button>
+              )}
+            </div>
 
-          <div className="report-frame">
-            <iframe
-              title="Sample Report 3"
-              src={iframeSrc}
-              frameBorder="0"
-              style={{ width: "100%", height: "100%" }}
-              allowFullScreen
-            />
+            <div className="report-frame">
+              {hasReport && iframeSrc ? (
+                <iframe
+                  title="Customer Order Tracking and RDD Monitoring Report"
+                  src={iframeSrc}
+                  frameBorder="0"
+                  className="report-iframe"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="no-report-container">
+                  <div className="no-report-icon">📊</div>
+                  <h3 className="no-report-title">No Report Available</h3>
+                  <p className="no-report-message">
+                    The report URL has not been configured. Please contact your administrator to set up the report link.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>

@@ -21,11 +21,14 @@ export default function Reports() {
 
   // Refresh the iframe only, not the whole app
   const iframeSrc = useMemo(() => {
+    if (!reportUrl || reportUrl.trim() === "") return null;
     const sep = reportUrl.includes("?") ? "&" : "?";
     return `${reportUrl}${sep}v=${cacheBust}`;
   }, [reportUrl, cacheBust]);
 
   const refreshReport = () => setCacheBust(Date.now());
+  
+  const hasReport = reportUrl && reportUrl.trim() !== "";
 
   return (
     <div className={`reporting-wrapper ${isDrawerOpen ? "drawer-open" : ""}`}>
@@ -40,26 +43,40 @@ export default function Reports() {
         />
 
         <div className="content-area">
-          <div className="content-header">
-            <h2 className="content-title">Power BI Reports</h2>
+          <div className="content-area-inner">
+            <div className="content-header">
+              <h2 className="content-title">Power BI Reports</h2>
 
-            <button
-              onClick={refreshReport}
-              className="btn btn-refresh"
-              aria-label="Refresh Report"
-            >
-              Refresh Report
-            </button>
-          </div>
+              {hasReport && (
+                <button
+                  onClick={refreshReport}
+                  className="btn btn-refresh"
+                  aria-label="Refresh Report"
+                >
+                  Refresh Report
+                </button>
+              )}
+            </div>
 
-          <div className="report-frame">
-            <iframe
-              title="Power BI Report"
-              src={iframeSrc}
-              frameBorder="0"
-              style={{ width: "100%", height: "100%" }}
-              allowFullScreen
-            />
+            <div className="report-frame">
+              {hasReport && iframeSrc ? (
+                <iframe
+                  title="Power BI Report"
+                  src={iframeSrc}
+                  frameBorder="0"
+                  className="report-iframe"
+                  allowFullScreen
+                />
+              ) : (
+                <div className="no-report-container">
+                  <div className="no-report-icon">📊</div>
+                  <h3 className="no-report-title">No Report Available</h3>
+                  <p className="no-report-message">
+                    The report URL has not been configured. Please contact your administrator to set up the report link.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>
