@@ -3,6 +3,7 @@ import "./Login.css";
 import ChatBot from "./Chatbot";
 import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { useNavigate } from "react-router-dom";
+import { apiCall, API_ENDPOINTS } from "./api/config";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -10,6 +11,7 @@ function Login() {
   const [status, setStatus] = useState("neutral");
   const [errorMessage, setErrorMessage] = useState("");
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { instance } = useMsal();
@@ -35,6 +37,8 @@ function Login() {
     return () => window.removeEventListener("mousemove", handleGlobalMouseMove);
   }, []);
 
+  // List of valid users for real-time validation (client-side feedback)
+  // The actual authentication still happens via API
   const validUsers = [
     { username: "Prathyusha_MLHC", password: "MLHC@2025" },
     { username: "Achyuth_MLHC", password: "MLHC@2025" },
@@ -42,7 +46,7 @@ function Login() {
     { username: "Vijendra_MLHC", password: "MLHC@2025" },
   ];
 
-  // Real-time validation
+  // Real-time validation for username
   useEffect(() => {
     if (username.length > 0) {
       const validUsername = validUsers.some(
@@ -64,6 +68,7 @@ function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
+  // Real-time validation for password
   useEffect(() => {
     if (password.length > 0 && username.length > 0) {
       const validUser = validUsers.find(
@@ -85,24 +90,74 @@ function Login() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password, username]);
 
-  const handleSignIn = () => {
-    const matchedUser = validUsers.find(
-      (user) => user.username === username && user.password === password
-    );
-
-    if (matchedUser) {
-      setStatus("success");
-      setErrorMessage("");
-      sessionStorage.setItem("localUserLoggedIn", "true");
-      sessionStorage.setItem("loggedInUsername", matchedUser.username);
-      setTimeout(() => {
-        sessionStorage.setItem("localUserLoggedIn", "true");
-        navigate("/homepage", { replace: true });
-      }, 1500);
-    } else {
+  const handleSignIn = async () => {
+    if (!username.trim() || !password.trim()) {
       setStatus("error");
-      setErrorMessage("Invalid credentials. Please check your username and password.");
+      setErrorMessage("Please enter both username and password.");
+      return;
+    }
+
+    setIsLoading(true);
+    setStatus("neutral");
+    setErrorMessage("");
+
+    try {
+      // API call to backend login endpoint
+      const response = await apiCall(API_ENDPOINTS.LOGIN, {
+        method: 'POST',
+        body: {
+          username: username.trim(),
+          password: password,
+        },
+      });
+
+      // Handle successful login
+      if (response.token || response.accessToken || response.success || response.data) {
+        setStatus("success");
+        
+        // Store authentication token if provided
+        const token = response.token || response.accessToken || response.data?.token;
+        if (token) {
+          sessionStorage.setItem("authToken", token);
+        }
+        
+        // Store user information
+        sessionStorage.setItem("localUserLoggedIn", "true");
+        const loggedInUsername = response.username || response.data?.username || response.user?.username || username;
+        sessionStorage.setItem("loggedInUsername", loggedInUsername);
+        
+        // Extract and store user role from response
+        // Try multiple possible locations for role in the response
+        const userRole = response.role || 
+                        response.data?.role || 
+                        response.user?.role || 
+                        response.data?.user?.role ||
+                        response.userRole;
+        
+        if (userRole) {
+          sessionStorage.setItem("userRole", userRole);
+        }
+        
+        // Store additional user data if provided
+        const userData = response.user || response.data?.user || {};
+        if (Object.keys(userData).length > 0) {
+          sessionStorage.setItem("userData", JSON.stringify(userData));
+        }
+
+        setTimeout(() => {
+          navigate("/homepage", { replace: true });
+        }, 1500);
+      } else {
+        throw new Error("Invalid response from server");
+      }
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error.message || "Invalid credentials. Please check your username and password."
+      );
       setTimeout(() => setStatus("neutral"), 2000);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -242,9 +297,9 @@ function Login() {
           <button
             className={`sign-in ${isFormValid ? "active" : ""}`}
             onClick={handleSignIn}
-            disabled={!isFormValid}
+            disabled={!isFormValid || isLoading}
           >
-            Sign In
+            {isLoading ? "Signing In..." : "Sign In"}
           </button>
         </div>
         <ChatBot />
