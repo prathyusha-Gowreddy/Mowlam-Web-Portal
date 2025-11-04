@@ -9,8 +9,8 @@ export default function ReportSample4() {
   const sidebarRef = useRef(null);
 
   // Power BI report URLs
-  const reportUrl = "https://app.powerbi.com/view?r=eyJrIjoiNjUwY2E1NTQtNTY2NS00ZTg4LWEyNWEtNWU4YThhMThkMzg4IiwidCI6IjVmNDkzNDk3LWE0YzgtNDA4MC05NWVmLTBjMGZlY2RkMjg5MCIsImMiOjl9&pageName=919d9cc5dec4e95223a8";
-  
+  // const reportUrl = "https://app.powerbi.com/view?r=eyJrIjoiNjUwY2E1NTQtNTY2NS00ZTg4LWEyNWEtNWU4YThhMThkMzg4IiwidCI6IjVmNDkzNDk3LWE0YzgtNDA4MC05NWVmLTBjMGZlY2RkMjg5MCIsImMiOjl9&pageName=919d9cc5dec4e95223a8";
+  const reportUrl = "";
   // Refresh the iframe only, not the whole app
   const iframeSrc = useMemo(() => {
     if (!reportUrl || reportUrl.trim() === "") return null;
