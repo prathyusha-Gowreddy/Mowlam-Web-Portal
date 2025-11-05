@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Login.css";
 import ChatBot from "./Chatbot";
 import { useMsal, useIsAuthenticated } from "@azure/msal-react";
@@ -12,7 +12,6 @@ function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
   const { instance } = useMsal();
   const isAuthenticated = useIsAuthenticated();
@@ -37,58 +36,83 @@ function Login() {
     return () => window.removeEventListener("mousemove", handleGlobalMouseMove);
   }, []);
 
-  // List of valid users for real-time validation (client-side feedback)
-  // The actual authentication still happens via API
-  const validUsers = [
-    { username: "Prathyusha_MLHC", password: "MLHC@2025" },
-    { username: "Achyuth_MLHC", password: "MLHC@2025" },
-    { username: "Bhargav_MLHC", password: "MLHC@2025" },
-    { username: "Vijendra_MLHC", password: "MLHC@2025" },
-  ];
+  // Function to validate credentials via API (validation only, no login)
+  const validateCredentials = useCallback(async (userValue, passValue) => {
+    // Use provided values or current state
+    const user = userValue !== undefined ? userValue : username.trim();
+    const pass = passValue !== undefined ? passValue : password;
 
-  // Real-time validation for username
-  useEffect(() => {
-    if (username.length > 0) {
-      const validUsername = validUsers.some(
-        (user) => user.username.toLowerCase().startsWith(username.toLowerCase())
-      );
-      
-      if (!validUsername) {
-        setStatus("error");
-        setErrorMessage("Invalid username. Please check your credentials.");
-        setTimeout(() => setStatus("neutral"), 1000);
-      } else {
+    // Don't validate if both are empty
+    if (!user && !pass) {
+      setErrorMessage("");
+      setStatus("neutral");
+      return;
+    }
+
+    try {
+      // Call the login API to validate credentials
+      // This is just for validation - we don't store tokens or log in
+      const response = await apiCall(API_ENDPOINTS.LOGIN, {
+        method: 'POST',
+        body: {
+          username: user || "",
+          password: pass || "",
+        },
+      });
+
+      // If validation succeeds (no error), clear any error messages
+      // Note: We don't store tokens here - only validate
+      if (response.token || response.accessToken || response.success || response.data) {
         setErrorMessage("");
         setStatus("neutral");
       }
-    } else {
-      setErrorMessage("");
-      setStatus("neutral");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [username]);
-
-  // Real-time validation for password
-  useEffect(() => {
-    if (password.length > 0 && username.length > 0) {
-      const validUser = validUsers.find(
-        (user) => user.username.toLowerCase().startsWith(username.toLowerCase())
-      );
+    } catch (error) {
+      // Extract error message from API response
+      // The apiCall function throws an Error with the message from the API
+      let apiErrorMessage = "Invalid credentials. Please check your username and password.";
       
-      if (validUser) {
-        const isValidPassword = validUser.password.startsWith(password);
-        if (!isValidPassword) {
-          setStatus("error");
-          setErrorMessage("Invalid password. Please check your credentials.");
-          setTimeout(() => setStatus("neutral"), 1000);
-        } else {
-          setErrorMessage("");
-          setStatus("neutral");
-        }
+      if (error.message) {
+        apiErrorMessage = error.message;
       }
+      
+      setStatus("error");
+      setErrorMessage(apiErrorMessage);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [password, username]);
+  }, [username, password]);
+
+  // Real-time API-based validation with debouncing for username
+  useEffect(() => {
+    // Clear previous timeout
+    const timeoutId = setTimeout(() => {
+      // Validate from the first character typed (index 0)
+      if (username.trim().length > 0) {
+        validateCredentials(username.trim(), password);
+      } else if (username.trim().length === 0 && password.length === 0) {
+        // Clear error if both fields are empty
+        setErrorMessage("");
+        setStatus("neutral");
+      }
+    }, 500); // Debounce delay of 500ms for faster feedback
+
+    return () => clearTimeout(timeoutId);
+  }, [username, password, validateCredentials]);
+
+  // Real-time API-based validation with debouncing for password
+  useEffect(() => {
+    // Clear previous timeout
+    const timeoutId = setTimeout(() => {
+      // Validate from the first character typed (index 0)
+      if (password.length > 0) {
+        validateCredentials(username.trim(), password);
+      } else if (username.trim().length === 0 && password.length === 0) {
+        // Clear error if both fields are empty
+        setErrorMessage("");
+        setStatus("neutral");
+      }
+    }, 500); // Debounce delay of 500ms for faster feedback
+
+    return () => clearTimeout(timeoutId);
+  }, [password, username, validateCredentials]);
 
   const handleSignIn = async () => {
     if (!username.trim() || !password.trim()) {
